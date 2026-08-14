@@ -304,7 +304,6 @@ size = Vector2(60.555557, 59.444443)
 [node name="Player2" type="CharacterBody2D" unique_id=1118238923]
 top_level = true
 texture_filter = 1
-scale = Vector2(1.8, 1.8)
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_61uo2")

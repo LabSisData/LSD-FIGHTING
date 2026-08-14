@@ -431,11 +431,20 @@ top_level = true
 position = Vector2(219, 525.00006)
 collision_priority = 2.0
 script = ExtResource("2_u5sy4")
+player_id = 1
+max_health = 100
+max_speed = 220.0
+acceleration = 800.0
+deceleration = 800.0
 
 [node name="Samurai" parent="." unique_id=1118238923 instance=ExtResource("1_lbhrr")]
 position = Vector2(993, 479.00003)
 script = ExtResource("4_gee14")
 player_id = 2
+max_health = 100
+max_speed = 220.0
+acceleration = 800.0
+deceleration = 800.0
 
 [node name="wall" type="StaticBody2D" parent="." unique_id=1272043439]
 visible = false

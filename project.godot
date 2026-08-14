@@ -11,14 +11,13 @@ config_version=5
 [application]
 
 config/name="lsd fight"
-run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1240
-window/size/viewport_height=820
+window/size/viewport_width=1000
+window/size/viewport_height=500
 window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
@@ -86,5 +85,6 @@ p2_attack={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
