@@ -1,36 +1,50 @@
 [gd_scene format=3 uid="uid://ddmquyq6bj3is"]
 
 [ext_resource type="Script" uid="uid://cxt301c25jgqv" path="res://scripts/player.gd" id="1_cotsb"]
-[ext_resource type="Texture2D" uid="uid://binfuklopbaae" path="res://src/entities/player/Cam/idle/camstand1.png" id="2_nokxu"]
-[ext_resource type="Texture2D" uid="uid://d2t31ngrq86ho" path="res://src/entities/player/Cam/idle/camstand2.png" id="3_7vla3"]
-[ext_resource type="Texture2D" uid="uid://dkacf5wi2ny6f" path="res://src/entities/player/Cam/idle/camstand3.png" id="4_0wd0x"]
-[ext_resource type="Texture2D" uid="uid://ccjgoxin6ejuy" path="res://src/entities/player/Cam/idle/camstand4.png" id="5_fmkxj"]
+[ext_resource type="Texture2D" uid="uid://ho36kmnp80w" path="res://src/entities/player/Cam/idle/ChatGPT Image 16 de ago. de 2026, 17_20_44.png" id="2_5m0si"]
 [ext_resource type="Texture2D" uid="uid://dqnyp5qf6e1ud" path="res://src/entities/player/Cam/run/camwalk1.png" id="6_wd6c3"]
 [ext_resource type="Texture2D" uid="uid://yax0xddx0rgu" path="res://src/entities/player/Cam/run/camwalk2.png" id="7_7gyev"]
 [ext_resource type="Texture2D" uid="uid://yhtpla3sxqwo" path="res://src/entities/player/Cam/run/camwalk3.png" id="8_1x85o"]
 [ext_resource type="Texture2D" uid="uid://trhdhyonoeim" path="res://src/entities/player/Cam/run/camwalk4.png" id="9_0otry"]
 [ext_resource type="Texture2D" uid="uid://cxx4oqif8i1tl" path="res://src/entities/player/Cam/run/camwalk5.png" id="10_1fhj6"]
+[ext_resource type="Script" uid="uid://kapimdp34m3l" path="res://scripts/hitbox.gd" id="11_nokxu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ndwd5"]
-radius = 17.0
-height = 132.0
+radius = 90.0
+height = 640.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxpu0"]
+atlas = ExtResource("2_5m0si")
+region = Rect2(46, 0, 429, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cotsb"]
+atlas = ExtResource("2_5m0si")
+region = Rect2(479, 0, 429, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nokxu"]
+atlas = ExtResource("2_5m0si")
+region = Rect2(912, 0, 429, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vla3"]
+atlas = ExtResource("2_5m0si")
+region = Rect2(1345, 0, 429, 887)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ndwd5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_nokxu")
+"texture": SubResource("AtlasTexture_dxpu0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_7vla3")
+"texture": SubResource("AtlasTexture_cotsb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_0wd0x")
+"texture": SubResource("AtlasTexture_nokxu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_fmkxj")
+"texture": SubResource("AtlasTexture_7vla3")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -50,23 +64,38 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("10_1fhj6")
 }],
-"loop": 1,
-"name": &"run",
+"loop": 0,
+"name": &"walk",
 "speed": 5.0
 }]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7vla3"]
+radius = 8.947369
+height = 33.40101
 
 [node name="Street" type="CharacterBody2D" unique_id=1407553763]
 texture_filter = 1
 script = ExtResource("1_cotsb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1007116138]
-position = Vector2(-23, 29)
+position = Vector2(-3, -11)
+scale = Vector2(0.2, 0.2)
 shape = SubResource("CapsuleShape2D_ndwd5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1860539883]
 texture_filter = 1
-position = Vector2(7, 7)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_ndwd5")
-animation = &"run"
-frame_progress = 0.3216556
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=427279495]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("11_nokxu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1476115130]
+position = Vector2(26.666668, -4.4444447)
+rotation = -1.6179202
+shape = SubResource("CapsuleShape2D_7vla3")
+debug_color = Color(0.98658746, 0, 0.3268667, 0.41960785)

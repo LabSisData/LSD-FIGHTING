@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="lsd fight"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1000
-window/size/viewport_height=500
-window/size/mode=2
+window/size/viewport_width=752
+window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

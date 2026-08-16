@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dxsnt2k8kvf20"]
+
+[ext_resource type="Texture2D" uid="uid://c7ishy1di2bk4" path="res://src/background/background-cenaprincpal/frame_0_delay-0.1s.png" id="1_ieyv1"]
+[ext_resource type="Texture2D" uid="uid://doqhmsgcqkvxq" path="res://src/background/background-cenaprincpal/frame_1_delay-0.1s.png" id="2_ni4ur"]
+[ext_resource type="Texture2D" uid="uid://cf2u0aicy2bwd" path="res://src/background/background-cenaprincpal/frame_2_delay-0.1s.png" id="3_1fdnk"]
+[ext_resource type="Texture2D" uid="uid://bgryhfbsu7qos" path="res://src/background/background-cenaprincpal/frame_3_delay-0.1s.png" id="4_qwq5h"]
+[ext_resource type="PackedScene" uid="uid://ddmquyq6bj3is" path="res://scenes/street.tscn" id="5_ni4ur"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5aq51"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ieyv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ni4ur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1fdnk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qwq5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_ieyv1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 13.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82bq7"]
+size = Vector2(800, 23)
+
+[node name="cenaprincipal" type="Node2D" unique_id=103296898]
+
+[node name="background-animated" type="Sprite2D" parent="." unique_id=1673663127]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="background-animated" unique_id=908193894]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_5aq51")
+autoplay = "default"
+frame_progress = 0.21214604
+centered = false
+
+[node name="Street" parent="." unique_id=1407553763 instance=ExtResource("5_ni4ur")]
+position = Vector2(159, 387)
+
+[node name="chao" type="StaticBody2D" parent="." unique_id=855407294]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chao" unique_id=1534544430]
+position = Vector2(377, 476.5)
+shape = SubResource("RectangleShape2D_82bq7")
