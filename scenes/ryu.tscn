@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bejdwkpeo5qvc"]
 
 [ext_resource type="Texture2D" uid="uid://cjlxscnwm58yg" path="res://src/entities/player/ryu/Crouch/Crouch1.png" id="1_06nvy"]
-[ext_resource type="Script" uid="uid://cxt301c25jgqv" path="res://scripts/player.gd" id="1_rf50b"]
+[ext_resource type="Script" uid="uid://cq0nqnkekxary" path="res://scripts/ryu.gd" id="1_qwo6c"]
 [ext_resource type="Texture2D" uid="uid://qqqfq87t78b2" path="res://src/entities/player/ryu/Crouch/Crouch2.png" id="2_d1eh6"]
 [ext_resource type="Texture2D" uid="uid://vd5exdekkt86" path="res://src/entities/player/ryu/Crouch/Crouch3.png" id="3_i06pv"]
 [ext_resource type="Texture2D" uid="uid://b3oojt5b6g024" path="res://src/entities/player/ryu/taking damage/dano01.png" id="4_es53u"]
@@ -12,8 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://ds0bk3x5qdm" path="res://src/entities/player/ryu/taking damage/danoCrouch.png" id="9_r1x03"]
 [ext_resource type="Texture2D" uid="uid://ncs287ynyeqn" path="res://src/entities/player/ryu/fall/fall01.png" id="10_ax1gs"]
 [ext_resource type="Texture2D" uid="uid://bxy8phx7fpucy" path="res://src/entities/player/ryu/fall/fall02.png" id="11_yvbjn"]
-[ext_resource type="Texture2D" uid="uid://cl6cd2mwjwptq" path="res://src/entities/player/ryu/fall/fall03.png" id="12_pxk63"]
-[ext_resource type="Texture2D" uid="uid://cl564ixwif24k" path="res://src/entities/player/ryu/fall/fall04.png" id="13_rv56p"]
 [ext_resource type="Texture2D" uid="uid://bhp34qfnkis0b" path="res://src/entities/player/ryu/fall/fall.png" id="14_ka51d"]
 [ext_resource type="Texture2D" uid="uid://dwqcbd34c704y" path="res://src/entities/player/ryu/Idle/idle01.png" id="15_oxxsb"]
 [ext_resource type="Texture2D" uid="uid://sgfbgqnig6ul" path="res://src/entities/player/ryu/Idle/idle02.png" id="16_8ctdc"]
@@ -42,10 +40,11 @@
 [ext_resource type="Texture2D" uid="uid://dot76lieuxxqx" path="res://src/entities/player/ryu/run/run02.png" id="40_g7per"]
 [ext_resource type="Texture2D" uid="uid://bi7e61ikpjvxk" path="res://src/entities/player/ryu/run/run03.png" id="41_r1x03"]
 [ext_resource type="Texture2D" uid="uid://dpkc7xikgfsbv" path="res://src/entities/player/ryu/run/run04.png" id="42_ax1gs"]
+[ext_resource type="Script" uid="uid://b5usubbqf4013" path="res://scripts/hitboxryu.gd" id="43_s6x0x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5aq51"]
 radius = 16.240322
-height = 93.59477
+height = 97.52808
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5aq51"]
 animations = [{
@@ -59,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_i06pv")
 }],
-"loop": 0,
+"loop": 2,
 "name": &"crouch",
 "speed": 5.0
 }, {
@@ -73,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_rf50b")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"damage",
 "speed": 5.0
 }, {
@@ -87,28 +86,30 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_r1x03")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"damageCrounch",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("25_48a0h")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_ka51d")
+}, {
+"duration": 1.0,
 "texture": ExtResource("10_ax1gs")
 }, {
 "duration": 1.0,
 "texture": ExtResource("11_yvbjn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_pxk63")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_rv56p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_ka51d")
 }],
-"loop": 1,
-"name": &"fall",
+"loop": 0,
+"name": &"fall_dead",
 "speed": 1.0
 }, {
 "frames": [{
@@ -136,7 +137,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("22_e5sj2")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -146,9 +147,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("24_20gqe")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_48a0h")
 }],
 "loop": 0,
 "name": &"jump",
@@ -173,7 +171,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("31_eey8m")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"kick",
 "speed": 5.0
 }, {
@@ -196,7 +194,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("37_x1f7s")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"punch",
 "speed": 5.0
 }, {
@@ -213,66 +211,42 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("42_ax1gs")
 }],
-"loop": 1,
-"name": &"run",
+"loop": 0,
+"name": &"walk",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5aq51"]
+size = Vector2(73, 20)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u162d"]
+height = 86.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=638033933]
-script = ExtResource("1_rf50b")
-
-[node name="col_jump" type="CollisionShape2D" parent="." unique_id=374177909]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_kick" type="CollisionShape2D" parent="." unique_id=1178256593]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_punch" type="CollisionShape2D" parent="." unique_id=71695991]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_run" type="CollisionShape2D" parent="." unique_id=1073122122]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_damage" type="CollisionShape2D" parent="." unique_id=324096263]
-visible = false
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_damageCrouch" type="CollisionShape2D" parent="." unique_id=1509301451]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
+script = ExtResource("1_qwo6c")
 
 [node name="col_fall" type="CollisionShape2D" parent="." unique_id=1118845414]
-position = Vector2(6, -2)
-rotation = 0.8107358
+rotation = 0.86121285
 shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_crouch" type="CollisionShape2D" parent="." unique_id=658531631]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
-
-[node name="col_idle" type="CollisionShape2D" parent="." unique_id=430579377]
-visible = false
-shape = SubResource("CapsuleShape2D_5aq51")
+disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=135760399]
 sprite_frames = SubResource("SpriteFrames_5aq51")
-animation = &"fall"
+animation = &"damageCrounch"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.25360382
 
-[node name="Area2D" type="Area2D" parent="." unique_id=2006293098]
-visible = false
+[node name="Hitbox" type="Area2D" parent="." unique_id=2006293098]
+position = Vector2(-51, -19)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("43_s6x0x")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1215681501]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1215681501]
+position = Vector2(34, 1)
 shape = SubResource("RectangleShape2D_5aq51")
+
+[node name="col_chao" type="CollisionShape2D" parent="." unique_id=1746419596]
+light_mask = 0
+shape = SubResource("CapsuleShape2D_u162d")
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

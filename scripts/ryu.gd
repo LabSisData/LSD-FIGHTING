@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# 1. Estados essenciais para um jogo de luta 1v1
+# Estados essenciais para um jogo de luta 1v1
 enum PlayerState {
 	IDLE,
 	WALK,
@@ -28,6 +28,7 @@ const JUMP_VELOCITY = -380.0
 var current_health: int
 var direction: float = 0.0
 var status: PlayerState = PlayerState.IDLE
+var current_attack: String = "punch" # Guarda qual golpe está sendo executado ("punch" ou "kick")
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
@@ -42,7 +43,7 @@ func _ready() -> void:
 	go_to_idle_state()
 
 # ==============================================================================
-# LOOP PRINCIPAL E MAQUINA DE ESTADOS
+# LOOP PRINCIPAL E MÁQUINA DE ESTADOS
 # ==============================================================================
 
 func _physics_process(delta: float) -> void:
@@ -90,16 +91,19 @@ func go_to_fall_state():
 	status = PlayerState.FALL
 	anim.play("fall")
 
-func go_to_attack_state():
+func go_to_attack_state(attack_type: String = "punch"):
 	status = PlayerState.ATTACK
+	current_attack = attack_type
 	
-	# Ajusta o lado do ataque com base no lado para onde o sprite está virado
-	if anim.flip_h:
-		$Hitbox.position.x = -abs($Hitbox.position.x)
-	else:
-		$Hitbox.position.x = abs($Hitbox.position.x)
+	# Ajusta o lado da Hitbox com base no espelhamento do sprite
+	if has_node("Hitbox"):
+		if anim.flip_h:
+			$Hitbox.position.x = -abs($Hitbox.position.x)
+		else:
+			$Hitbox.position.x = abs($Hitbox.position.x)
 		
-	anim.play("attack")
+	# Toca a animação correspondente: "punch" ou "kick"
+	anim.play(attack_type)
 	
 	if not anim.animation_finished.is_connected(_on_attack_finished):
 		anim.animation_finished.connect(_on_attack_finished, CONNECT_ONE_SHOT)
@@ -121,7 +125,8 @@ func go_to_dead_state():
 	if hitbox_collision:
 		hitbox_collision.disabled = true
 		
-	$CollisionShape2D.set_deferred("disabled", true)
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.set_deferred("disabled", true)
 	
 	if anim.sprite_frames.has_animation("dead"):
 		anim.play("dead")
@@ -205,9 +210,9 @@ func update_direction():
 	direction = Input.get_axis(prefix + "left", prefix + "right")
 	
 	if direction < 0:
-		anim.flip_h = true
+		anim.flip_h = false # Mantém original para esquerda
 	elif direction > 0:
-		anim.flip_h = false
+		anim.flip_h = true  # Espelha para a direita
 
 func check_jump_input() -> bool:
 	var prefix := "p" + str(player_id) + "_"
@@ -218,22 +223,20 @@ func check_jump_input() -> bool:
 
 func check_attack_input() -> bool:
 	var prefix := "p" + str(player_id) + "_"
-	if Input.is_action_just_pressed(prefix + "attack"):
-		go_to_attack_state()
-		return true
-	if Input.is_action_just_pressed(prefix + "attack"):
-		print("P2 Apertou o botão de ataque!") # Adicione esta linha para testar
-		go_to_attack_state()
-		return true
-	return false
 	
+	if Input.is_action_just_pressed(prefix + "punch"):
+		go_to_attack_state("punch")
+		return true
+	elif Input.is_action_just_pressed(prefix + "kick"):
+		go_to_attack_state("kick")
+		return true
+		
+	return false
+
 func _on_frame_changed():
-	if status == PlayerState.ATTACK and anim.animation == "attack":
-		if hitbox_collision: # Evita o erro de null instance
-			if anim.frame == 4:
-				hitbox_collision.disabled = false
-			else:
-				hitbox_collision.disabled = true
+	if status == PlayerState.ATTACK and anim.animation == current_attack:
+		if hitbox_collision:
+			hitbox_collision.disabled = (anim.frame != 4)
 
 func _on_attack_finished():
 	if status == PlayerState.ATTACK:
@@ -266,29 +269,3 @@ func take_damage(amount: int):
 		go_to_dead_state()
 	else:
 		go_to_hurt_state()
-
-func _on_animated_sprite_2d_frame_changed() -> void:
-	var anim_atual = $AnimatedSprite2D.animation
-	var frame_atual = $AnimatedSprite2D.frame
-	
-	if anim_atual == "fall":
-		# Garante que o colisor de queda está ativo
-		$col_fall.disabled = false 
-		
-		# Pega a forma geométrica de dentro do nó (ex: um RectangleShape2D)
-		var formato = $col_fall.shape
-		
-		if frame_atual == 0:
-			# Ryu está mais em pé
-			formato.size = Vector2(30, 80)      # Largura e Altura da caixa
-			$col_fall.position = Vector2(0, 0)   # Posição centralizada
-			
-		elif frame_atual == 1:
-			# Ryu começou a girar de ponta-cabeça
-			formato.size = Vector2(40, 60)
-			$col_fall.position = Vector2(0, -10)
-			
-		elif frame_atual >= 2:
-			# Ryu caiu deitado no chão (quadros 2, 3 e 4)
-			formato.size = Vector2(90, 25)      # Caixa bem larga e baixinha
-			$col_fall.position = Vector2(10, 20) # Move a caixa para baixo e pro lado
