@@ -333,7 +333,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xwknr")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -407,7 +407,8 @@ texture_filter = 1
 position = Vector2(-3.1578948, -6.842106)
 scale = Vector2(1.6, 1.6)
 sprite_frames = SubResource("SpriteFrames_5aq51")
-animation = &"defend"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=667399060]
 collision_layer = 0

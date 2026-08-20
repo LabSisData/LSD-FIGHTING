@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cf2u0aicy2bwd" path="res://src/background/background-cenaprincpal/frame_2_delay-0.1s.png" id="3_1fdnk"]
 [ext_resource type="Texture2D" uid="uid://bgryhfbsu7qos" path="res://src/background/background-cenaprincpal/frame_3_delay-0.1s.png" id="4_qwq5h"]
 [ext_resource type="PackedScene" uid="uid://ddmquyq6bj3is" path="res://scenes/street.tscn" id="5_ni4ur"]
+[ext_resource type="PackedScene" uid="uid://bejdwkpeo5qvc" path="res://scenes/ryu.tscn" id="6_1fdnk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5aq51"]
 animations = [{
@@ -51,3 +52,7 @@ position = Vector2(159, 387)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chao" unique_id=1534544430]
 position = Vector2(377, 476.5)
 shape = SubResource("RectangleShape2D_82bq7")
+
+[node name="ryu" parent="." unique_id=638033933 instance=ExtResource("6_1fdnk")]
+position = Vector2(-81, 0)
+player_id = 2
